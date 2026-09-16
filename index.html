@@ -10,21 +10,21 @@
 <style>
 
 *{
-box-sizing:border-box
+box-sizing:border-box;
 }
 
 body{
 margin:0;
 background:#fff;
 color:#111;
-font-family:'Montserrat',sans-serif
+font-family:'Montserrat',sans-serif;
 }
 
 .pago{
 width:100%;
 max-width:760px;
 margin:0 auto;
-padding:55px 25px 70px
+padding:55px 25px 70px;
 }
 
 .logo{
@@ -32,7 +32,7 @@ text-align:center;
 font-size:25px;
 font-weight:600;
 letter-spacing:5px;
-margin-bottom:55px
+margin-bottom:55px;
 }
 
 .titulo{
@@ -41,7 +41,7 @@ font-size:13px;
 font-weight:400;
 letter-spacing:2px;
 text-transform:uppercase;
-margin-bottom:35px
+margin-bottom:35px;
 }
 
 .producto{
@@ -49,18 +49,18 @@ display:flex;
 align-items:center;
 gap:25px;
 border-bottom:1px solid #ddd;
-padding-bottom:30px
+padding-bottom:30px;
 }
 
 .producto img{
 width:125px;
 height:150px;
 object-fit:contain;
-background:#fff
+background:#fff;
 }
 
 .info{
-flex:1
+flex:1;
 }
 
 .nombre{
@@ -68,16 +68,16 @@ font-size:16px;
 font-weight:500;
 letter-spacing:.5px;
 text-transform:uppercase;
-margin-bottom:12px
+margin-bottom:12px;
 }
 
 .precio{
 font-size:15px;
-font-weight:400
+font-weight:400;
 }
 
 .seccion{
-margin-top:35px
+margin-top:35px;
 }
 
 .seccion-titulo{
@@ -85,12 +85,12 @@ font-size:11px;
 color:#888;
 letter-spacing:1px;
 text-transform:uppercase;
-margin-bottom:14px
+margin-bottom:14px;
 }
 
 .tallas{
 display:flex;
-gap:8px
+gap:8px;
 }
 
 .talla{
@@ -99,13 +99,13 @@ height:44px;
 border:1px solid #333;
 background:#fff;
 font-family:'Montserrat',sans-serif;
-cursor:pointer
+cursor:pointer;
 }
 
 .talla:hover,
 .talla.activa{
 background:#000;
-color:#fff
+color:#fff;
 }
 
 .resumen{
@@ -114,15 +114,15 @@ padding-top:20px;
 border-top:1px solid #ddd;
 display:flex;
 justify-content:space-between;
-font-size:15px
+font-size:15px;
 }
 
 .total{
-font-weight:500
+font-weight:500;
 }
 
 .metodos{
-margin-top:35px
+margin-top:35px;
 }
 
 .metodo{
@@ -137,32 +137,32 @@ align-items:center;
 justify-content:space-between;
 font-family:'Montserrat',sans-serif;
 font-size:12px;
-cursor:pointer
+cursor:pointer;
 }
 
 .metodo:hover{
-border-color:#111
+border-color:#111;
 }
 
 .metodo.activo{
-border-color:#111
+border-color:#111;
 }
 
 .metodo-nombre{
 letter-spacing:.5px;
-text-transform:uppercase
+text-transform:uppercase;
 }
 
 .check{
 width:16px;
 height:16px;
 border:1px solid #555;
-border-radius:50%
+border-radius:50%;
 }
 
 .metodo.activo .check{
 background:#000;
-box-shadow:inset 0 0 0 4px #fff
+box-shadow:inset 0 0 0 4px #fff;
 }
 
 
@@ -174,15 +174,15 @@ margin-top:5px;
 margin-bottom:15px;
 padding:20px;
 border:1px solid #ddd;
-background:#fff
+background:#fff;
 }
 
 .datos-pago.activo{
-display:block
+display:block;
 }
 
 .campo{
-margin-bottom:15px
+margin-bottom:15px;
 }
 
 .campo label{
@@ -191,7 +191,7 @@ font-size:10px;
 color:#777;
 letter-spacing:1px;
 text-transform:uppercase;
-margin-bottom:7px
+margin-bottom:7px;
 }
 
 .campo input{
@@ -201,31 +201,31 @@ border:1px solid #ccc;
 padding:0 12px;
 font-family:'Montserrat',sans-serif;
 font-size:12px;
-outline:none
+outline:none;
 }
 
 .campo input:focus{
-border-color:#111
+border-color:#111;
 }
 
 .dos-campos{
 display:flex;
-gap:12px
+gap:12px;
 }
 
 .dos-campos .campo{
-flex:1
+flex:1;
 }
 
 .info-yape{
 font-size:11px;
 line-height:1.7;
 color:#666;
-margin-bottom:15px
+margin-bottom:15px;
 }
 
 .pagar{
-margin-top:30px
+margin-top:30px;
 }
 
 .boton-pagar{
@@ -238,11 +238,17 @@ font-family:'Montserrat',sans-serif;
 font-size:12px;
 letter-spacing:2px;
 text-transform:uppercase;
-cursor:pointer
+cursor:pointer;
+transition:.2s;
 }
 
 .boton-pagar:hover{
-opacity:.85
+opacity:.85;
+}
+
+.boton-pagar:disabled{
+opacity:.7;
+cursor:not-allowed;
 }
 
 .nota{
@@ -250,57 +256,167 @@ margin-top:18px;
 text-align:center;
 color:#888;
 font-size:10px;
-line-height:1.7
+line-height:1.7;
 }
 
 .aviso{
 display:none;
 margin-top:12px;
 color:#777;
-font-size:10px
+font-size:10px;
 }
 
+
+/* ==============================
+   PANTALLA DE CARGA
+============================== */
+
+.pantalla-carga{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(255,255,255,.97);
+z-index:9999;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+text-align:center;
+}
+
+.pantalla-carga.activa{
+display:flex;
+}
+
+.ruedita{
+width:38px;
+height:38px;
+border:3px solid #ddd;
+border-top:3px solid #111;
+border-radius:50%;
+animation:girar .8s linear infinite;
+margin-bottom:25px;
+}
+
+.texto-cargando{
+font-size:11px;
+letter-spacing:2px;
+text-transform:uppercase;
+}
+
+@keyframes girar{
+
+from{
+transform:rotate(0deg);
+}
+
+to{
+transform:rotate(360deg);
+}
+
+}
+
+
+/* ==============================
+   COMPRA FINALIZADA
+============================== */
+
+.compra-finalizada{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#fff;
+z-index:10000;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+text-align:center;
+padding:30px;
+}
+
+.compra-finalizada.activa{
+display:flex;
+}
+
+.icono-check{
+width:58px;
+height:58px;
+border:1px solid #111;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:25px;
+margin-bottom:28px;
+}
+
+.compra-titulo{
+font-size:17px;
+font-weight:500;
+letter-spacing:3px;
+text-transform:uppercase;
+margin-bottom:12px;
+}
+
+.compra-texto{
+font-size:11px;
+color:#777;
+letter-spacing:.5px;
+}
+
+.compra-marca{
+margin-top:40px;
+font-size:12px;
+font-weight:600;
+letter-spacing:4px;
+}
+
+
+/* RESPONSIVE */
 
 @media(max-width:600px){
 
 .pago{
-padding:35px 18px 50px
+padding:35px 18px 50px;
 }
 
 .producto{
-gap:15px
+gap:15px;
 }
 
 .producto img{
 width:95px;
-height:120px
+height:120px;
 }
 
 .nombre{
-font-size:13px
+font-size:13px;
 }
 
 .dos-campos{
 flex-direction:column;
-gap:0
+gap:0;
 }
 
 }
 
 </style>
-
 </head>
 
 
 <body>
 
-<div class="pago">
 
+<div class="pago">
 
 <div class="logo">
 TWENTY
 </div>
-
 
 <div class="titulo">
 Finalizar compra
@@ -370,7 +486,7 @@ $ 40.00
 </div>
 
 
-<!-- METODOS DE PAGO -->
+<!-- METODOS -->
 
 <div class="seccion metodos">
 
@@ -515,7 +631,6 @@ placeholder="Ingresa tu código"
 
 </div>
 
-
 </div>
 
 
@@ -542,11 +657,57 @@ Selecciona tu talla, método de pago y completa los datos antes de continuar.
 
 </div>
 
+</div>
+
+
+<!-- =========================
+PANTALLA DE CARGA
+========================= -->
+
+<div
+id="pantallaCarga"
+class="pantalla-carga"
+>
+
+<div class="ruedita"></div>
+
+<div class="texto-cargando">
+Procesando compra...
+</div>
+
+</div>
+
+
+<!-- =========================
+COMPRA FINALIZADA
+========================= -->
+
+<div
+id="compraFinalizada"
+class="compra-finalizada"
+>
+
+<div class="icono-check">
+✓
+</div>
+
+<div class="compra-titulo">
+Compra finalizada
+</div>
+
+<div class="compra-texto">
+Gracias por comprar en TWENTY.
+</div>
+
+<div class="compra-marca">
+TWENTY
+</div>
 
 </div>
 
 
 <script>
+
 
 /* =========================
 TALLAS
@@ -564,7 +725,7 @@ tallas.forEach(t=>{
 t.addEventListener("click",()=>{
 
 tallas.forEach(x=>{
-x.classList.remove("activa")
+x.classList.remove("activa");
 });
 
 t.classList.add("activa");
@@ -584,11 +745,14 @@ METODOS DE PAGO
 
 const metodos=document.querySelectorAll(".metodo");
 
-const datosTarjeta=document.getElementById("datosTarjeta");
+const datosTarjeta=
+document.getElementById("datosTarjeta");
 
-const datosYape=document.getElementById("datosYape");
+const datosYape=
+document.getElementById("datosYape");
 
-const botonPagar=document.getElementById("botonPagar");
+const botonPagar=
+document.getElementById("botonPagar");
 
 
 metodos.forEach(m=>{
@@ -598,7 +762,7 @@ m.addEventListener("click",()=>{
 const metodo=m.dataset.metodo;
 
 
-/* SI YA ESTA ABIERTO */
+/* SI YA ESTA ABIERTO, LO CIERRA */
 
 if(m.classList.contains("activo")){
 
@@ -615,10 +779,10 @@ return;
 }
 
 
-/* CERRAR TODO */
+/* CERRAR LOS DOS */
 
 metodos.forEach(x=>{
-x.classList.remove("activo")
+x.classList.remove("activo");
 });
 
 datosTarjeta.classList.remove("activo");
@@ -626,7 +790,7 @@ datosTarjeta.classList.remove("activo");
 datosYape.classList.remove("activo");
 
 
-/* ABRIR TARJETA */
+/* TARJETA */
 
 if(metodo==="tarjeta"){
 
@@ -639,7 +803,7 @@ botonPagar.textContent="PAGAR CON TARJETA";
 }
 
 
-/* ABRIR YAPE */
+/* YAPE */
 
 if(metodo==="yape"){
 
@@ -647,7 +811,7 @@ m.classList.add("activo");
 
 datosYape.classList.add("activo");
 
-botonPagar.textContent="CONFIRMAR YAPE";
+botonPagar.textContent="PAGAR CON YAPE";
 
 }
 
@@ -657,13 +821,24 @@ botonPagar.textContent="CONFIRMAR YAPE";
 
 
 /* =========================
-BOTON
+PANTALLA DE COMPRA
+========================= */
+
+const pantallaCarga=
+document.getElementById("pantallaCarga");
+
+const compraFinalizada=
+document.getElementById("compraFinalizada");
+
+
+/* =========================
+BOTON DE PAGO
 ========================= */
 
 botonPagar.addEventListener("click",()=>{
 
 
-/* TALLA */
+/* COMPROBAR TALLA */
 
 if(!tallaSeleccionada){
 
@@ -674,9 +849,10 @@ return;
 }
 
 
-/* METODO */
+/* COMPROBAR METODO */
 
-const metodoActivo=document.querySelector(".metodo.activo");
+const metodoActivo=
+document.querySelector(".metodo.activo");
 
 
 if(!metodoActivo){
@@ -688,10 +864,13 @@ return;
 }
 
 
-const metodo=metodoActivo.dataset.metodo;
+const metodo=
+metodoActivo.dataset.metodo;
 
 
-/* TARJETA */
+/* =========================
+TARJETA
+========================= */
 
 if(metodo==="tarjeta"){
 
@@ -718,15 +897,12 @@ return;
 
 }
 
-
-alert(
-"Datos completados correctamente. Para procesar pagos reales necesitas conectar una plataforma de pago segura."
-);
-
 }
 
 
-/* YAPE */
+/* =========================
+YAPE
+========================= */
 
 if(metodo==="yape"){
 
@@ -744,12 +920,31 @@ return;
 
 }
 
-
-alert(
-"Código de Yape registrado. Para validar el pago necesitas conectar este formulario a un sistema de pago."
-);
-
 }
+
+
+/* =========================
+INICIAR CARGA
+========================= */
+
+botonPagar.disabled=true;
+
+pantallaCarga.classList.add("activa");
+
+
+/*
+Esperamos 1.5 segundos
+para mostrar la animación.
+*/
+
+setTimeout(()=>{
+
+pantallaCarga.classList.remove("activa");
+
+compraFinalizada.classList.add("activa");
+
+},1500);
+
 
 });
 
