@@ -4,10 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <title>TWENTY — Pago</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+box-sizing:border-box
+}
 
 body{
 margin:0;
@@ -136,7 +140,10 @@ font-size:12px;
 cursor:pointer
 }
 
-.metodo:hover,
+.metodo:hover{
+border-color:#111
+}
+
 .metodo.activo{
 border-color:#111
 }
@@ -158,13 +165,16 @@ background:#000;
 box-shadow:inset 0 0 0 4px #fff
 }
 
+
 /* FORMULARIOS */
 
 .datos-pago{
 display:none;
-margin-top:20px;
+margin-top:5px;
+margin-bottom:15px;
 padding:20px;
-border:1px solid #ddd
+border:1px solid #ddd;
+background:#fff
 }
 
 .datos-pago.activo{
@@ -250,6 +260,7 @@ color:#777;
 font-size:10px
 }
 
+
 @media(max-width:600px){
 
 .pago{
@@ -275,22 +286,35 @@ gap:0
 }
 
 }
+
 </style>
+
 </head>
+
 
 <body>
 
 <div class="pago">
 
-<div class="logo">TWENTY</div>
+
+<div class="logo">
+TWENTY
+</div>
+
 
 <div class="titulo">
 Finalizar compra
 </div>
 
+
+<!-- PRODUCTO -->
+
 <div class="producto">
 
-<img src="https://i.ibb.co/hRf2HmdW/1.png" alt="Honess Polo Boxy Fit">
+<img
+src="https://i.ibb.co/hRf2HmdW/1.png"
+alt="Honess Polo Boxy Fit"
+>
 
 <div class="info">
 
@@ -307,7 +331,7 @@ $ 40.00
 </div>
 
 
-<!-- TALLA -->
+<!-- TALLAS -->
 
 <div class="seccion">
 
@@ -335,7 +359,9 @@ Selecciona una talla antes de continuar.
 
 <div class="resumen">
 
-<span>Total</span>
+<span>
+Total
+</span>
 
 <span class="total">
 $ 40.00
@@ -344,7 +370,7 @@ $ 40.00
 </div>
 
 
-<!-- METODOS -->
+<!-- METODOS DE PAGO -->
 
 <div class="seccion metodos">
 
@@ -355,7 +381,11 @@ Método de pago
 
 <!-- TARJETA -->
 
-<button class="metodo activo" type="button" data-metodo="tarjeta">
+<button
+class="metodo"
+type="button"
+data-metodo="tarjeta"
+>
 
 <span class="metodo-nombre">
 Tarjeta
@@ -366,7 +396,10 @@ Tarjeta
 </button>
 
 
-<div id="datosTarjeta" class="datos-pago activo">
+<div
+id="datosTarjeta"
+class="datos-pago"
+>
 
 <div class="campo">
 
@@ -439,7 +472,11 @@ maxlength="4"
 
 <!-- YAPE -->
 
-<button class="metodo" type="button" data-metodo="yape">
+<button
+class="metodo"
+type="button"
+data-metodo="yape"
+>
 
 <span class="metodo-nombre">
 Yape
@@ -450,7 +487,10 @@ Yape
 </button>
 
 
-<div id="datosYape" class="datos-pago">
+<div
+id="datosYape"
+class="datos-pago"
+>
 
 <div class="info-yape">
 
@@ -475,6 +515,7 @@ placeholder="Ingresa tu código"
 
 </div>
 
+
 </div>
 
 
@@ -482,21 +523,34 @@ placeholder="Ingresa tu código"
 
 <div class="pagar">
 
-<button id="botonPagar" class="boton-pagar" type="button">
-PAGAR CON TARJETA
+<button
+id="botonPagar"
+class="boton-pagar"
+type="button"
+>
+
+CONTINUAR
+
 </button>
 
 </div>
 
 
 <div class="nota">
+
 Selecciona tu talla, método de pago y completa los datos antes de continuar.
+
 </div>
+
 
 </div>
 
 
 <script>
+
+/* =========================
+TALLAS
+========================= */
 
 let tallaSeleccionada="";
 
@@ -505,13 +559,13 @@ const tallas=document.querySelectorAll(".talla");
 const aviso=document.getElementById("aviso");
 
 
-/* TALLAS */
-
 tallas.forEach(t=>{
 
 t.addEventListener("click",()=>{
 
-tallas.forEach(x=>x.classList.remove("activa"));
+tallas.forEach(x=>{
+x.classList.remove("activa")
+});
 
 t.classList.add("activa");
 
@@ -524,7 +578,9 @@ aviso.style.display="none";
 });
 
 
-/* METODOS */
+/* =========================
+METODOS DE PAGO
+========================= */
 
 const metodos=document.querySelectorAll(".metodo");
 
@@ -539,26 +595,59 @@ metodos.forEach(m=>{
 
 m.addEventListener("click",()=>{
 
-metodos.forEach(x=>x.classList.remove("activo"));
-
-m.classList.add("activo");
+const metodo=m.dataset.metodo;
 
 
-if(m.dataset.metodo==="tarjeta"){
+/* SI YA ESTA ABIERTO */
 
-datosTarjeta.classList.add("activo");
+if(m.classList.contains("activo")){
 
-datosYape.classList.remove("activo");
-
-botonPagar.textContent="PAGAR CON TARJETA";
-
-}else{
+m.classList.remove("activo");
 
 datosTarjeta.classList.remove("activo");
 
+datosYape.classList.remove("activo");
+
+botonPagar.textContent="CONTINUAR";
+
+return;
+
+}
+
+
+/* CERRAR TODO */
+
+metodos.forEach(x=>{
+x.classList.remove("activo")
+});
+
+datosTarjeta.classList.remove("activo");
+
+datosYape.classList.remove("activo");
+
+
+/* ABRIR TARJETA */
+
+if(metodo==="tarjeta"){
+
+m.classList.add("activo");
+
+datosTarjeta.classList.add("activo");
+
+botonPagar.textContent="PAGAR CON TARJETA";
+
+}
+
+
+/* ABRIR YAPE */
+
+if(metodo==="yape"){
+
+m.classList.add("activo");
+
 datosYape.classList.add("activo");
 
-botonPagar.textContent="CONFIRMAR PAGO CON YAPE";
+botonPagar.textContent="CONFIRMAR YAPE";
 
 }
 
@@ -567,9 +656,14 @@ botonPagar.textContent="CONFIRMAR PAGO CON YAPE";
 });
 
 
-/* BOTON DE PAGO */
+/* =========================
+BOTON
+========================= */
 
 botonPagar.addEventListener("click",()=>{
+
+
+/* TALLA */
 
 if(!tallaSeleccionada){
 
@@ -580,51 +674,80 @@ return;
 }
 
 
-/* TARJETA */
+/* METODO */
 
-const metodoActivo=document.querySelector(".metodo.activo").dataset.metodo;
-
-
-if(metodoActivo==="tarjeta"){
-
-const numero=document.getElementById("numeroTarjeta").value.trim();
-
-const titular=document.getElementById("titular").value.trim();
-
-const vencimiento=document.getElementById("vencimiento").value.trim();
-
-const cvv=document.getElementById("cvv").value.trim();
+const metodoActivo=document.querySelector(".metodo.activo");
 
 
-if(!numero || !titular || !vencimiento || !cvv){
+if(!metodoActivo){
 
-alert("Completa todos los datos de tu tarjeta antes de continuar.");
+alert("Selecciona un método de pago.");
 
 return;
 
 }
 
-alert("Datos completados. Para aceptar pagos reales debes conectar esta página a una plataforma de pago segura.");
+
+const metodo=metodoActivo.dataset.metodo;
+
+
+/* TARJETA */
+
+if(metodo==="tarjeta"){
+
+const numero=
+document.getElementById("numeroTarjeta").value.trim();
+
+const titular=
+document.getElementById("titular").value.trim();
+
+const vencimiento=
+document.getElementById("vencimiento").value.trim();
+
+const cvv=
+document.getElementById("cvv").value.trim();
+
+
+if(!numero || !titular || !vencimiento || !cvv){
+
+alert(
+"Completa todos los datos de tu tarjeta antes de continuar."
+);
+
+return;
+
+}
+
+
+alert(
+"Datos completados correctamente. Para procesar pagos reales necesitas conectar una plataforma de pago segura."
+);
 
 }
 
 
 /* YAPE */
 
-if(metodoActivo==="yape"){
+if(metodo==="yape"){
 
-const codigo=document.getElementById("codigoYape").value.trim();
+const codigo=
+document.getElementById("codigoYape").value.trim();
 
 
 if(!codigo){
 
-alert("Ingresa el código de operación de Yape.");
+alert(
+"Ingresa el código de operación de Yape."
+);
 
 return;
 
 }
 
-alert("Código de Yape registrado. Para validar pagos reales debes conectar este formulario a un sistema de pago.");
+
+alert(
+"Código de Yape registrado. Para validar el pago necesitas conectar este formulario a un sistema de pago."
+);
 
 }
 
