@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -214,9 +213,6 @@ background:#000;
 box-shadow:inset 0 0 0 4px #fff;
 }
 
-
-/* FORMULARIOS */
-
 .datos-pago{
 display:none;
 margin-top:5px;
@@ -315,11 +311,6 @@ color:#777;
 font-size:10px;
 }
 
-
-/* ==============================
-   PANTALLA DE CARGA
-============================== */
-
 .pantalla-carga{
 display:none;
 position:fixed;
@@ -366,11 +357,6 @@ transform:rotate(360deg);
 }
 
 }
-
-
-/* ==============================
-   COMPRA FINALIZADA
-============================== */
 
 .compra-finalizada{
 display:none;
@@ -425,9 +411,6 @@ font-weight:600;
 letter-spacing:4px;
 }
 
-
-/* RESPONSIVE */
-
 @media(max-width:600px){
 
 .pago{
@@ -457,7 +440,6 @@ gap:0;
 </style>
 </head>
 
-
 <body>
 
 <div class="pago">
@@ -469,9 +451,6 @@ TWENTY
 <div class="titulo">
 Finalizar compra
 </div>
-
-
-<!-- PRODUCTO -->
 
 <div class="producto">
 
@@ -498,8 +477,6 @@ class="precio">
 </div>
 
 
-<!-- COLOR -->
-
 <div
 id="seccionColor"
 class="seccion"
@@ -523,8 +500,6 @@ class="galeria">
 </div>
 
 
-<!-- TALLAS -->
-
 <div class="seccion">
 
 <div class="seccion-titulo">
@@ -545,8 +520,6 @@ Selecciona una talla antes de continuar.
 </div>
 
 
-<!-- TOTAL -->
-
 <div class="resumen">
 
 <span>
@@ -561,16 +534,12 @@ class="total">
 </div>
 
 
-<!-- METODOS -->
-
 <div class="seccion metodos">
 
 <div class="seccion-titulo">
 Método de pago
 </div>
 
-
-<!-- TARJETA -->
 
 <button
 class="metodo"
@@ -661,8 +630,6 @@ maxlength="4"
 </div>
 
 
-<!-- YAPE -->
-
 <button
 class="metodo"
 type="button"
@@ -709,8 +676,6 @@ placeholder="Ingresa tu código"
 </div>
 
 
-<!-- BOTON -->
-
 <div class="pagar">
 
 <button
@@ -735,8 +700,6 @@ Selecciona tu talla, método de pago y completa los datos antes de continuar.
 </div>
 
 
-<!-- PANTALLA DE CARGA -->
-
 <div
 id="pantallaCarga"
 class="pantalla-carga"
@@ -750,8 +713,6 @@ Procesando compra...
 
 </div>
 
-
-<!-- COMPRA FINALIZADA -->
 
 <div
 id="compraFinalizada"
@@ -780,7 +741,7 @@ TWENTY
 <script>
 
 /* =====================================================
-   BASE DE DATOS DE LOS 21 PRODUCTOS
+   PRODUCTOS
 ===================================================== */
 
 const productos = {
@@ -1056,18 +1017,34 @@ colores:{
 ]
 },
 tallas:["S","M","L"]
+},
+
+22:{
+nombre:"HONESS-POLO BOXY FIT",
+precio:40,
+genero:"HOMBRE",
+colores:{
+"NEGRO":[
+"https://i.ibb.co/hRf2HmdW/1.png"
+]
+},
+tallas:["S","M","L","XL"]
 }
 
 };
 
 
 /* =====================================================
-   DETECTAR PRODUCTO DESDE LA URL
+   DETECTAR PRODUCTO
 ===================================================== */
 
-const parametros = new URLSearchParams(window.location.search);
+const parametros=
+new URLSearchParams(
+window.location.search
+);
 
-let numeroProducto = parseInt(
+let numeroProducto=
+parseInt(
 parametros.get("producto")
 );
 
@@ -1078,40 +1055,58 @@ if(
 numeroProducto=1;
 }
 
-const productoActual = productos[numeroProducto];
+const productoActual=
+productos[numeroProducto];
 
 
 /* =====================================================
    ELEMENTOS
 ===================================================== */
 
-const imagenProducto =
-document.getElementById("imagenProducto");
+const imagenProducto=
+document.getElementById(
+"imagenProducto"
+);
 
-const nombreProducto =
-document.getElementById("nombreProducto");
+const nombreProducto=
+document.getElementById(
+"nombreProducto"
+);
 
-const precioProducto =
-document.getElementById("precioProducto");
+const precioProducto=
+document.getElementById(
+"precioProducto"
+);
 
-const totalProducto =
-document.getElementById("totalProducto");
+const totalProducto=
+document.getElementById(
+"totalProducto"
+);
 
-const colores =
-document.getElementById("colores");
+const colores=
+document.getElementById(
+"colores"
+);
 
-const seccionColor =
-document.getElementById("seccionColor");
+const seccionColor=
+document.getElementById(
+"seccionColor"
+);
 
-const galeria =
-document.getElementById("galeria");
+const galeria=
+document.getElementById(
+"galeria"
+);
 
-const tallas =
-document.getElementById("tallas");
+const tallas=
+document.getElementById(
+"tallas"
+);
 
-const aviso =
-document.getElementById("aviso");
-
+const aviso=
+document.getElementById(
+"aviso"
+);
 
 let colorSeleccionado="";
 let tallaSeleccionada="";
@@ -1127,56 +1122,75 @@ nombreProducto.textContent=
 productoActual.nombre;
 
 precioProducto.textContent=
-"$ " + productoActual.precio.toFixed(2);
+"$ " +
+productoActual.precio.toFixed(2);
 
 totalProducto.textContent=
-"$ " + productoActual.precio.toFixed(2);
+"$ " +
+productoActual.precio.toFixed(2);
 
 
 /* COLORES */
 
 const nombresColores=
-Object.keys(productoActual.colores);
+Object.keys(
+productoActual.colores
+);
 
 colores.innerHTML="";
 galeria.innerHTML="";
 
 if(nombresColores.length>0){
 
-seccionColor.style.display="block";
+seccionColor.style.display=
+"block";
 
 nombresColores.forEach(
 (color,index)=>{
 
 const boton=
-document.createElement("button");
+document.createElement(
+"button"
+);
 
 boton.type="button";
 
 boton.className="color";
 
-boton.textContent=color;
+boton.textContent=
+color;
 
 boton.addEventListener(
 "click",
 ()=>{
 
 document
-.querySelectorAll(".color")
+.querySelectorAll(
+".color"
+)
 .forEach(b=>{
-b.classList.remove("activa");
+b.classList.remove(
+"activa"
+);
 });
 
-boton.classList.add("activa");
+boton.classList.add(
+"activa"
+);
 
-colorSeleccionado=color;
+colorSeleccionado=
+color;
 
-mostrarImagenesColor(color);
+mostrarImagenesColor(
+color
+);
 
 }
 );
 
-colores.appendChild(boton);
+colores.appendChild(
+boton
+);
 
 }
 );
@@ -1186,9 +1200,13 @@ nombresColores[0];
 
 document
 .querySelector(".color")
-.classList.add("activa");
+.classList.add(
+"activa"
+);
 
-mostrarImagenesColor(colorSeleccionado);
+mostrarImagenesColor(
+colorSeleccionado
+);
 
 }
 
@@ -1201,34 +1219,47 @@ productoActual.tallas.forEach(
 (talla)=>{
 
 const boton=
-document.createElement("button");
+document.createElement(
+"button"
+);
 
 boton.type="button";
 
 boton.className="talla";
 
-boton.textContent=talla;
+boton.textContent=
+talla;
 
 boton.addEventListener(
 "click",
 ()=>{
 
 document
-.querySelectorAll(".talla")
+.querySelectorAll(
+".talla"
+)
 .forEach(x=>{
-x.classList.remove("activa");
+x.classList.remove(
+"activa"
+);
 });
 
-boton.classList.add("activa");
+boton.classList.add(
+"activa"
+);
 
-tallaSeleccionada=talla;
+tallaSeleccionada=
+talla;
 
-aviso.style.display="none";
+aviso.style.display=
+"none";
 
 }
 );
 
-tallas.appendChild(boton);
+tallas.appendChild(
+boton
+);
 
 }
 );
@@ -1237,15 +1268,22 @@ tallas.appendChild(boton);
 
 
 /* =====================================================
-   MOSTRAR IMAGENES SEGÚN COLOR
+   IMÁGENES
 ===================================================== */
 
-function mostrarImagenesColor(color){
+function mostrarImagenesColor(
+color
+){
 
 const imagenes=
-productoActual.colores[color];
+productoActual.colores[
+color
+];
 
-if(!imagenes || !imagenes.length){
+if(
+!imagenes ||
+!imagenes.length
+){
 return;
 }
 
@@ -1259,45 +1297,66 @@ galeria.innerHTML="";
 
 if(imagenes.length>1){
 
-galeria.classList.add("activa");
+galeria.classList.add(
+"activa"
+);
 
 imagenes.forEach(
 (url,index)=>{
 
 const mini=
-document.createElement("img");
+document.createElement(
+"img"
+);
 
 mini.src=url;
 
 mini.className=
 "miniatura" +
-(index===0 ? " activa":"");
+(
+index===0
+?
+" activa"
+:
+""
+);
 
 mini.addEventListener(
 "click",
 ()=>{
 
 document
-.querySelectorAll(".miniatura")
+.querySelectorAll(
+".miniatura"
+)
 .forEach(x=>{
-x.classList.remove("activa");
+x.classList.remove(
+"activa"
+);
 });
 
-mini.classList.add("activa");
+mini.classList.add(
+"activa"
+);
 
-imagenProducto.src=url;
+imagenProducto.src=
+url;
 
 }
 );
 
-galeria.appendChild(mini);
+galeria.appendChild(
+mini
+);
 
 }
 );
 
 }else{
 
-galeria.classList.remove("activa");
+galeria.classList.remove(
+"activa"
+);
 
 }
 
@@ -1305,46 +1364,66 @@ galeria.classList.remove("activa");
 
 
 /* =====================================================
-   INICIAR PRODUCTO
+   INICIAR
 ===================================================== */
 
 cargarProducto();
 
 
 /* =====================================================
-   METODOS DE PAGO
+   MÉTODOS DE PAGO
 ===================================================== */
 
 const metodos=
-document.querySelectorAll(".metodo");
+document.querySelectorAll(
+".metodo"
+);
 
 const datosTarjeta=
-document.getElementById("datosTarjeta");
+document.getElementById(
+"datosTarjeta"
+);
 
 const datosYape=
-document.getElementById("datosYape");
+document.getElementById(
+"datosYape"
+);
 
 const botonPagar=
-document.getElementById("botonPagar");
+document.getElementById(
+"botonPagar"
+);
 
 
 metodos.forEach(m=>{
 
-m.addEventListener("click",()=>{
+m.addEventListener(
+"click",
+()=>{
 
 const metodo=
 m.dataset.metodo;
 
 
-/* SI YA ESTA ABIERTO, LO CIERRA */
+/* CERRAR SI YA ESTÁ ABIERTO */
 
-if(m.classList.contains("activo")){
+if(
+m.classList.contains(
+"activo"
+)
+){
 
-m.classList.remove("activo");
+m.classList.remove(
+"activo"
+);
 
-datosTarjeta.classList.remove("activo");
+datosTarjeta.classList.remove(
+"activo"
+);
 
-datosYape.classList.remove("activo");
+datosYape.classList.remove(
+"activo"
+);
 
 botonPagar.textContent=
 "CONTINUAR";
@@ -1357,20 +1436,33 @@ return;
 /* CERRAR LOS DOS */
 
 metodos.forEach(x=>{
-x.classList.remove("activo");
+x.classList.remove(
+"activo"
+);
 });
 
-datosTarjeta.classList.remove("activo");
-datosYape.classList.remove("activo");
+datosTarjeta.classList.remove(
+"activo"
+);
+
+datosYape.classList.remove(
+"activo"
+);
 
 
 /* TARJETA */
 
-if(metodo==="tarjeta"){
+if(
+metodo==="tarjeta"
+){
 
-m.classList.add("activo");
+m.classList.add(
+"activo"
+);
 
-datosTarjeta.classList.add("activo");
+datosTarjeta.classList.add(
+"activo"
+);
 
 botonPagar.textContent=
 "PAGAR CON TARJETA";
@@ -1380,11 +1472,17 @@ botonPagar.textContent=
 
 /* YAPE */
 
-if(metodo==="yape"){
+if(
+metodo==="yape"
+){
 
-m.classList.add("activo");
+m.classList.add(
+"activo"
+);
 
-datosYape.classList.add("activo");
+datosYape.classList.add(
+"activo"
+);
 
 botonPagar.textContent=
 "PAGAR CON YAPE";
@@ -1397,18 +1495,22 @@ botonPagar.textContent=
 
 
 /* =====================================================
-   PANTALLA DE COMPRA
+   PANTALLAS
 ===================================================== */
 
 const pantallaCarga=
-document.getElementById("pantallaCarga");
+document.getElementById(
+"pantallaCarga"
+);
 
 const compraFinalizada=
-document.getElementById("compraFinalizada");
+document.getElementById(
+"compraFinalizada"
+);
 
 
 /* =====================================================
-   BOTON DE PAGO
+   PAGAR
 ===================================================== */
 
 botonPagar.addEventListener(
@@ -1416,24 +1518,24 @@ botonPagar.addEventListener(
 ()=>{
 
 
-/* COMPROBAR TALLA */
+/* TALLA */
 
 if(!tallaSeleccionada){
 
-aviso.style.display="block";
+aviso.style.display=
+"block";
 
 return;
 
 }
 
 
-/* COMPROBAR METODO */
+/* MÉTODO */
 
 const metodoActivo=
 document.querySelector(
 ".metodo.activo"
 );
-
 
 if(!metodoActivo){
 
@@ -1445,35 +1547,42 @@ return;
 
 }
 
-
 const metodo=
 metodoActivo.dataset.metodo;
 
 
-/* =====================================================
-   TARJETA
-===================================================== */
+/* TARJETA */
 
-if(metodo==="tarjeta"){
+if(
+metodo==="tarjeta"
+){
 
 const numero=
 document
-.getElementById("numeroTarjeta")
+.getElementById(
+"numeroTarjeta"
+)
 .value.trim();
 
 const titular=
 document
-.getElementById("titular")
+.getElementById(
+"titular"
+)
 .value.trim();
 
 const vencimiento=
 document
-.getElementById("vencimiento")
+.getElementById(
+"vencimiento"
+)
 .value.trim();
 
 const cvv=
 document
-.getElementById("cvv")
+.getElementById(
+"cvv"
+)
 .value.trim();
 
 
@@ -1495,17 +1604,18 @@ return;
 }
 
 
-/* =====================================================
-   YAPE
-===================================================== */
+/* YAPE */
 
-if(metodo==="yape"){
+if(
+metodo==="yape"
+){
 
 const codigo=
 document
-.getElementById("codigoYape")
+.getElementById(
+"codigoYape"
+)
 .value.trim();
-
 
 if(!codigo){
 
@@ -1520,27 +1630,30 @@ return;
 }
 
 
-/* =====================================================
-   INICIAR CARGA
-===================================================== */
+/* PROCESANDO */
 
-botonPagar.disabled=true;
+botonPagar.disabled=
+true;
 
-pantallaCarga.classList.add("activa");
+pantallaCarga.classList.add(
+"activa"
+);
 
 
-/*
-Esperamos 1.5 segundos
-para mostrar la animación.
-*/
+setTimeout(
+()=>{
 
-setTimeout(()=>{
+pantallaCarga.classList.remove(
+"activa"
+);
 
-pantallaCarga.classList.remove("activa");
+compraFinalizada.classList.add(
+"activa"
+);
 
-compraFinalizada.classList.add("activa");
-
-},1500);
+},
+1500
+);
 
 });
 
@@ -1548,4 +1661,3 @@ compraFinalizada.classList.add("activa");
 
 </body>
 </html>
-```
