@@ -1,8 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <title>TWENTY — Pago</title>
@@ -91,6 +93,7 @@ margin-bottom:14px;
 .tallas{
 display:flex;
 gap:8px;
+flex-wrap:wrap;
 }
 
 .talla{
@@ -106,6 +109,52 @@ cursor:pointer;
 .talla.activa{
 background:#000;
 color:#fff;
+}
+
+.colores{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.color{
+min-width:75px;
+height:42px;
+padding:0 14px;
+border:1px solid #333;
+background:#fff;
+font-family:'Montserrat',sans-serif;
+font-size:11px;
+cursor:pointer;
+text-transform:uppercase;
+}
+
+.color:hover,
+.color.activa{
+background:#000;
+color:#fff;
+}
+
+.galeria{
+display:none;
+margin-top:15px;
+gap:8px;
+}
+
+.galeria.activa{
+display:flex;
+}
+
+.miniatura{
+width:58px;
+height:65px;
+object-fit:contain;
+border:1px solid #ddd;
+cursor:pointer;
+}
+
+.miniatura.activa{
+border:1px solid #111;
 }
 
 .resumen{
@@ -411,7 +460,6 @@ gap:0;
 
 <body>
 
-
 <div class="pago">
 
 <div class="logo">
@@ -428,20 +476,48 @@ Finalizar compra
 <div class="producto">
 
 <img
-src="https://i.ibb.co/hRf2HmdW/1.png"
-alt="Honess Polo Boxy Fit"
+id="imagenProducto"
+src=""
+alt=""
 >
 
 <div class="info">
 
-<div class="nombre">
-HONESS-POLO BOXY FIT
+<div
+id="nombreProducto"
+class="nombre">
 </div>
 
-<div class="precio">
-$ 40.00
+<div
+id="precioProducto"
+class="precio">
 </div>
 
+</div>
+
+</div>
+
+
+<!-- COLOR -->
+
+<div
+id="seccionColor"
+class="seccion"
+style="display:none;"
+>
+
+<div class="seccion-titulo">
+Selecciona tu color
+</div>
+
+<div
+id="colores"
+class="colores">
+</div>
+
+<div
+id="galeria"
+class="galeria">
 </div>
 
 </div>
@@ -455,16 +531,14 @@ $ 40.00
 Selecciona tu talla
 </div>
 
-<div class="tallas">
-
-<button class="talla" type="button">S</button>
-<button class="talla" type="button">M</button>
-<button class="talla" type="button">L</button>
-<button class="talla" type="button">XL</button>
-
+<div
+id="tallas"
+class="tallas">
 </div>
 
-<div id="aviso" class="aviso">
+<div
+id="aviso"
+class="aviso">
 Selecciona una talla antes de continuar.
 </div>
 
@@ -479,8 +553,9 @@ Selecciona una talla antes de continuar.
 Total
 </span>
 
-<span class="total">
-$ 40.00
+<span
+id="totalProducto"
+class="total">
 </span>
 
 </div>
@@ -660,9 +735,7 @@ Selecciona tu talla, método de pago y completa los datos antes de continuar.
 </div>
 
 
-<!-- =========================
-PANTALLA DE CARGA
-========================= -->
+<!-- PANTALLA DE CARGA -->
 
 <div
 id="pantallaCarga"
@@ -678,9 +751,7 @@ Procesando compra...
 </div>
 
 
-<!-- =========================
-COMPRA FINALIZADA
-========================= -->
+<!-- COMPRA FINALIZADA -->
 
 <div
 id="compraFinalizada"
@@ -708,42 +779,544 @@ TWENTY
 
 <script>
 
+/* =====================================================
+   BASE DE DATOS DE LOS 21 PRODUCTOS
+===================================================== */
 
-/* =========================
-TALLAS
-========================= */
+const productos = {
 
+1:{
+nombre:"POLO REGULAR FIT",
+precio:40,
+genero:"HOMBRE",
+colores:{
+"NEGRO":[
+"https://i.ibb.co/KC1QhRF/5.png"
+],
+"BLANCO":[
+"https://i.ibb.co/Nnn528Lm/SDA.png"
+]
+},
+tallas:["S","M","L","XL"]
+},
+
+2:{
+nombre:"POLO HIGH COTON",
+precio:40,
+genero:"HOMBRE",
+colores:{
+"NEGRO":[
+"https://i.ibb.co/gZrPB788/TMW-0285.webp"
+],
+"PERLA":[
+"https://i.ibb.co/PvL9HDCf/6.png",
+"https://i.ibb.co/vCz0xV17/e4c9c129-9db4-47bd-a889-dcbe65a6e610.png",
+"https://i.ibb.co/dJ5tJ1fq/TMW-0282-01.webp"
+]
+},
+tallas:["S","M","L","XL"]
+},
+
+3:{
+nombre:"POLO BOXY FIT",
+precio:40,
+genero:"HOMBRE",
+colores:{
+"BLANCO":[
+"https://i.ibb.co/MD45wYVY/2.png"
+]
+},
+tallas:["S","M","L","XL"]
+},
+
+4:{
+nombre:"POLO OVERSIZE",
+precio:40,
+genero:"HOMBRE",
+colores:{
+"GRIS":[
+"https://i.ibb.co/C3bWZZZD/3.png"
+]
+},
+tallas:["S","M","L","XL"]
+},
+
+5:{
+nombre:"POLO OVERSIZE",
+precio:40,
+genero:"HOMBRE",
+colores:{
+"CELESTE":[
+"https://i.ibb.co/8DmJG9jf/4.png"
+]
+},
+tallas:["S","M","L","XL"]
+},
+
+6:{
+nombre:"BAGGY LAZER",
+precio:80,
+genero:"HOMBRE",
+colores:{
+"HIELO":[
+"https://i.ibb.co/Q7T6vkMd/335374c0-369d-42f4-944f-5516cd14dc32.png"
+],
+"MAIZ COLOR":[
+"https://i.ibb.co/Qv0Bq1hz/743bd0f5-9986-4276-b650-677359ea6690.png"
+],
+"MAIZ CLARO":[
+"https://i.ibb.co/BVxzsmzx/40eaf563-25aa-4377-8a67-f43b1d0a1e1b.png"
+]
+},
+tallas:["28","30","32","34"]
+},
+
+7:{
+nombre:"BAGGY ANGEL",
+precio:99,
+genero:"HOMBRE",
+colores:{
+"CELESTE":[
+"https://i.ibb.co/5HMrshp/FWEAS.png"
+]
+},
+tallas:["28","30","32","34"]
+},
+
+8:{
+nombre:"REGULAR FIT",
+precio:70,
+genero:"HOMBRE",
+colores:{
+"BEIGE":[
+"https://i.ibb.co/SDjkx5Wm/PANTALON-REGULAR-FIT-T20.png"
+]
+},
+tallas:["28","30","32","34"]
+},
+
+9:{
+nombre:"SASTRE BAGGY",
+precio:80,
+genero:"HOMBRE",
+colores:{
+"NEGRO":[
+"https://i.ibb.co/0VF9GZL7/PANTALON-SASTRE-T20.png"
+]
+},
+tallas:["28","30","32","34"]
+},
+
+10:{
+nombre:"MOM JEAN",
+precio:80,
+genero:"HOMBRE",
+colores:{
+"GRIS CLARO":[
+"https://i.ibb.co/s9gw4GpS/ADFS.png"
+]
+},
+tallas:["28","30","32","34"]
+},
+
+11:{
+nombre:"FLARET JEAN FUEGO",
+precio:85,
+genero:"HOMBRE",
+colores:{
+"MAIZ":[
+"https://i.ibb.co/G4hJjnkq/1-FLARET-T20.png"
+],
+"NEGRO":[
+"https://i.ibb.co/fGC5TVfb/HDFG.png"
+]
+},
+tallas:["28","30","32","34"]
+},
+
+12:{
+nombre:"FLARET JEAN LASER",
+precio:85,
+genero:"HOMBRE",
+colores:{
+"CARBON":[
+"https://i.ibb.co/ksMkq6LH/c4670570-6dd1-4544-b057-7d678482c3cc.png"
+]
+},
+tallas:["28","30","32","34"]
+},
+
+13:{
+nombre:"HOODIE MOON REGULAR",
+precio:80,
+genero:"HOMBRE",
+colores:{
+"HUESO":[
+"https://i.ibb.co/WvxzLnyd/5f21673c-49ff-4a1c-afdb-f0110753d4d2.png"
+]
+},
+tallas:["S","M","L"]
+},
+
+14:{
+nombre:"ZIP HOODIE DOUBLE ZIP",
+precio:85,
+genero:"HOMBRE",
+colores:{
+"NEGRO":[
+"https://i.ibb.co/qFC0yvNZ/df0f2b52-4a38-4521-a189-c199e3cb057f.png"
+]
+},
+tallas:["S","M","L"]
+},
+
+15:{
+nombre:"HOODIE ESTRELLA BOXI",
+precio:85,
+genero:"HOMBRE",
+colores:{
+"BLANCO":[
+"https://i.ibb.co/C5MjSX41/840ac334-becf-4732-bd14-ce0fbae73ad6.png"
+]
+},
+tallas:["S","M","L"]
+},
+
+16:{
+nombre:"HOODIE DUO BOXI FIT",
+precio:85,
+genero:"HOMBRE",
+colores:{
+"NEGRO":[
+"https://i.ibb.co/FkMbNc1W/ed6df9ba-a9f8-4680-a68b-36d7b59593cd.png"
+]
+},
+tallas:["S","M","L"]
+},
+
+17:{
+nombre:"HOODIE ARAÑA BOXI FIT",
+precio:85,
+genero:"HOMBRE",
+colores:{
+"GRIS":[
+"https://i.ibb.co/Df8BHPSt/889dfb47-178b-4f2d-9199-3091820d7507.png"
+]
+},
+tallas:["S","M","L"]
+},
+
+18:{
+nombre:"CAMISA BOXY FIT CAMUFLADO",
+precio:60,
+genero:"HOMBRE",
+colores:{
+"BEIGE":[
+"https://twentymoda.com/storage/images/item/TMW-0038.webp",
+"https://twentymoda.com/storage/images/item/TMW-0038-01.webp"
+]
+},
+tallas:["S","M","L"]
+},
+
+19:{
+nombre:"CAMISA BOXI FIT LINO",
+precio:60,
+genero:"HOMBRE",
+colores:{
+"NEGRO":[
+"https://i.ibb.co/MyqHfsM0/77e82dbf-550d-4e34-ad90-587b7e1ba0da.png"
+],
+"BLANCO":[
+"https://i.ibb.co/N2XT5QWD/9bdb5f8d-314a-4538-9d51-7cc78c377985.png"
+]
+},
+tallas:["S","M"]
+},
+
+20:{
+nombre:"JACKET AMELIO - BL/NG",
+precio:100,
+genero:"HOMBRE",
+colores:{
+"CAMUFLADO":[
+"https://i.ibb.co/27RQxxSF/61b2afa5-7be8-4e90-a8d8-1f5e6dc8b7ab.png"
+]
+},
+tallas:["S","M","L"]
+},
+
+21:{
+nombre:"JACKET CUERINA-NEGRA",
+precio:100,
+genero:"HOMBRE",
+colores:{
+"NEGRO":[
+"https://i.ibb.co/SD0XxKL6/2b342775-8828-40b9-b358-8b192c886bae.png"
+]
+},
+tallas:["S","M","L"]
+}
+
+};
+
+
+/* =====================================================
+   DETECTAR PRODUCTO DESDE LA URL
+===================================================== */
+
+const parametros = new URLSearchParams(window.location.search);
+
+let numeroProducto = parseInt(
+parametros.get("producto")
+);
+
+if(
+!numeroProducto ||
+!productos[numeroProducto]
+){
+numeroProducto=1;
+}
+
+const productoActual = productos[numeroProducto];
+
+
+/* =====================================================
+   ELEMENTOS
+===================================================== */
+
+const imagenProducto =
+document.getElementById("imagenProducto");
+
+const nombreProducto =
+document.getElementById("nombreProducto");
+
+const precioProducto =
+document.getElementById("precioProducto");
+
+const totalProducto =
+document.getElementById("totalProducto");
+
+const colores =
+document.getElementById("colores");
+
+const seccionColor =
+document.getElementById("seccionColor");
+
+const galeria =
+document.getElementById("galeria");
+
+const tallas =
+document.getElementById("tallas");
+
+const aviso =
+document.getElementById("aviso");
+
+
+let colorSeleccionado="";
 let tallaSeleccionada="";
 
-const tallas=document.querySelectorAll(".talla");
 
-const aviso=document.getElementById("aviso");
+/* =====================================================
+   CARGAR PRODUCTO
+===================================================== */
+
+function cargarProducto(){
+
+nombreProducto.textContent=
+productoActual.nombre;
+
+precioProducto.textContent=
+"$ " + productoActual.precio.toFixed(2);
+
+totalProducto.textContent=
+"$ " + productoActual.precio.toFixed(2);
 
 
-tallas.forEach(t=>{
+/* COLORES */
 
-t.addEventListener("click",()=>{
+const nombresColores=
+Object.keys(productoActual.colores);
 
-tallas.forEach(x=>{
+colores.innerHTML="";
+galeria.innerHTML="";
+
+if(nombresColores.length>0){
+
+seccionColor.style.display="block";
+
+nombresColores.forEach(
+(color,index)=>{
+
+const boton=
+document.createElement("button");
+
+boton.type="button";
+
+boton.className="color";
+
+boton.textContent=color;
+
+boton.addEventListener(
+"click",
+()=>{
+
+document
+.querySelectorAll(".color")
+.forEach(b=>{
+b.classList.remove("activa");
+});
+
+boton.classList.add("activa");
+
+colorSeleccionado=color;
+
+mostrarImagenesColor(color);
+
+}
+);
+
+colores.appendChild(boton);
+
+}
+);
+
+colorSeleccionado=
+nombresColores[0];
+
+document
+.querySelector(".color")
+.classList.add("activa");
+
+mostrarImagenesColor(colorSeleccionado);
+
+}
+
+
+/* TALLAS */
+
+tallas.innerHTML="";
+
+productoActual.tallas.forEach(
+(talla)=>{
+
+const boton=
+document.createElement("button");
+
+boton.type="button";
+
+boton.className="talla";
+
+boton.textContent=talla;
+
+boton.addEventListener(
+"click",
+()=>{
+
+document
+.querySelectorAll(".talla")
+.forEach(x=>{
 x.classList.remove("activa");
 });
 
-t.classList.add("activa");
+boton.classList.add("activa");
 
-tallaSeleccionada=t.textContent.trim();
+tallaSeleccionada=talla;
 
 aviso.style.display="none";
 
+}
+);
+
+tallas.appendChild(boton);
+
+}
+);
+
+}
+
+
+/* =====================================================
+   MOSTRAR IMAGENES SEGÚN COLOR
+===================================================== */
+
+function mostrarImagenesColor(color){
+
+const imagenes=
+productoActual.colores[color];
+
+if(!imagenes || !imagenes.length){
+return;
+}
+
+imagenProducto.src=
+imagenes[0];
+
+imagenProducto.alt=
+productoActual.nombre;
+
+galeria.innerHTML="";
+
+if(imagenes.length>1){
+
+galeria.classList.add("activa");
+
+imagenes.forEach(
+(url,index)=>{
+
+const mini=
+document.createElement("img");
+
+mini.src=url;
+
+mini.className=
+"miniatura" +
+(index===0 ? " activa":"");
+
+mini.addEventListener(
+"click",
+()=>{
+
+document
+.querySelectorAll(".miniatura")
+.forEach(x=>{
+x.classList.remove("activa");
 });
 
-});
+mini.classList.add("activa");
+
+imagenProducto.src=url;
+
+}
+);
+
+galeria.appendChild(mini);
+
+}
+);
+
+}else{
+
+galeria.classList.remove("activa");
+
+}
+
+}
 
 
-/* =========================
-METODOS DE PAGO
-========================= */
+/* =====================================================
+   INICIAR PRODUCTO
+===================================================== */
 
-const metodos=document.querySelectorAll(".metodo");
+cargarProducto();
+
+
+/* =====================================================
+   METODOS DE PAGO
+===================================================== */
+
+const metodos=
+document.querySelectorAll(".metodo");
 
 const datosTarjeta=
 document.getElementById("datosTarjeta");
@@ -759,7 +1332,8 @@ metodos.forEach(m=>{
 
 m.addEventListener("click",()=>{
 
-const metodo=m.dataset.metodo;
+const metodo=
+m.dataset.metodo;
 
 
 /* SI YA ESTA ABIERTO, LO CIERRA */
@@ -772,7 +1346,8 @@ datosTarjeta.classList.remove("activo");
 
 datosYape.classList.remove("activo");
 
-botonPagar.textContent="CONTINUAR";
+botonPagar.textContent=
+"CONTINUAR";
 
 return;
 
@@ -786,7 +1361,6 @@ x.classList.remove("activo");
 });
 
 datosTarjeta.classList.remove("activo");
-
 datosYape.classList.remove("activo");
 
 
@@ -798,7 +1372,8 @@ m.classList.add("activo");
 
 datosTarjeta.classList.add("activo");
 
-botonPagar.textContent="PAGAR CON TARJETA";
+botonPagar.textContent=
+"PAGAR CON TARJETA";
 
 }
 
@@ -811,7 +1386,8 @@ m.classList.add("activo");
 
 datosYape.classList.add("activo");
 
-botonPagar.textContent="PAGAR CON YAPE";
+botonPagar.textContent=
+"PAGAR CON YAPE";
 
 }
 
@@ -820,9 +1396,9 @@ botonPagar.textContent="PAGAR CON YAPE";
 });
 
 
-/* =========================
-PANTALLA DE COMPRA
-========================= */
+/* =====================================================
+   PANTALLA DE COMPRA
+===================================================== */
 
 const pantallaCarga=
 document.getElementById("pantallaCarga");
@@ -831,11 +1407,13 @@ const compraFinalizada=
 document.getElementById("compraFinalizada");
 
 
-/* =========================
-BOTON DE PAGO
-========================= */
+/* =====================================================
+   BOTON DE PAGO
+===================================================== */
 
-botonPagar.addEventListener("click",()=>{
+botonPagar.addEventListener(
+"click",
+()=>{
 
 
 /* COMPROBAR TALLA */
@@ -852,12 +1430,16 @@ return;
 /* COMPROBAR METODO */
 
 const metodoActivo=
-document.querySelector(".metodo.activo");
+document.querySelector(
+".metodo.activo"
+);
 
 
 if(!metodoActivo){
 
-alert("Selecciona un método de pago.");
+alert(
+"Selecciona un método de pago."
+);
 
 return;
 
@@ -868,26 +1450,39 @@ const metodo=
 metodoActivo.dataset.metodo;
 
 
-/* =========================
-TARJETA
-========================= */
+/* =====================================================
+   TARJETA
+===================================================== */
 
 if(metodo==="tarjeta"){
 
 const numero=
-document.getElementById("numeroTarjeta").value.trim();
+document
+.getElementById("numeroTarjeta")
+.value.trim();
 
 const titular=
-document.getElementById("titular").value.trim();
+document
+.getElementById("titular")
+.value.trim();
 
 const vencimiento=
-document.getElementById("vencimiento").value.trim();
+document
+.getElementById("vencimiento")
+.value.trim();
 
 const cvv=
-document.getElementById("cvv").value.trim();
+document
+.getElementById("cvv")
+.value.trim();
 
 
-if(!numero || !titular || !vencimiento || !cvv){
+if(
+!numero ||
+!titular ||
+!vencimiento ||
+!cvv
+){
 
 alert(
 "Completa todos los datos de tu tarjeta antes de continuar."
@@ -900,14 +1495,16 @@ return;
 }
 
 
-/* =========================
-YAPE
-========================= */
+/* =====================================================
+   YAPE
+===================================================== */
 
 if(metodo==="yape"){
 
 const codigo=
-document.getElementById("codigoYape").value.trim();
+document
+.getElementById("codigoYape")
+.value.trim();
 
 
 if(!codigo){
@@ -923,9 +1520,9 @@ return;
 }
 
 
-/* =========================
-INICIAR CARGA
-========================= */
+/* =====================================================
+   INICIAR CARGA
+===================================================== */
 
 botonPagar.disabled=true;
 
@@ -945,10 +1542,10 @@ compraFinalizada.classList.add("activa");
 
 },1500);
 
-
 });
 
 </script>
 
 </body>
 </html>
+```
